@@ -10,9 +10,9 @@ Clone this repository or download the script file directly.
 
 Install the required dependencies using pip:
 
-'''python
+```python
 pip install mysql-connector-python
-'''
+```
 
 ## Usage
 Make sure you have a MySQL server installed and running.
@@ -28,9 +28,9 @@ database_name: The name of the database to use.
 
 ## Run the script:
 
-'''python
+``` python
 python csv_to_mysql.py
-'''
+```
 
 Follow the prompts to input the table name and column names. Separate the column names with commas.
 
