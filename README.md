@@ -26,6 +26,9 @@ user: The username for the MySQL server.
 password: The password for the MySQL server.
 database_name: The name of the database to use.
 
+## Logic
+![Main Logic](./imgs/code.png)
+
 ## Run the script:
 
 '''python
