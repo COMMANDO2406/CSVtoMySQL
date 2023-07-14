@@ -2,8 +2,8 @@
 This Python script enables you to import data from a CSV file into a MySQL database. It provides a straightforward interface to input the database name, table name, and column names for the table. The script creates the table dynamically based on the provided column names and their data types. It then reads the CSV file, skipping the header row, and inserts the data into the MySQL table.
 
 ## Prerequisites
-Python 3.x
-MySQL Server
+  1. Python 3.x
+  2. MySQL Server
 
 ## Installation
 Clone this repository or download the script file directly.
