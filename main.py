@@ -1,25 +1,28 @@
 import mysql.connector
 import csv
 
+database_name = input("Enter database name: ")
+
 con = mysql.connector.connect(
     host = "localhost",
     user = "root",
     password = "root",
-    database = "Database1"
+    database = database_name
 )
 
 cur = con.cursor()
 
 if con.is_connected():
-    print("Connected")
+    print("Connected successfully")
 else:
     print("Not connected")
 
-table_name = "NewTable"
 
-header = input("Enter column names (comma-separated): ").split(",")
+table_name = input("Enter table name: ")
 
-csv_file = "blank.csv"
+header = input("Enter column names (Seperated by commas): ").split(",")
+
+csv_file = "main.csv"
 with open(csv_file, "r") as file:
     reader = csv.reader(file)
 
