@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>CSV to MySQL Docs</title>
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js"
+    ></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>CSV to MySQL</h1>
+    </header>
+    <div class="container">
+      <nav>
+        <ul>
+          <li><a href="#" data-doc="introduction.md">Introduction</a></li>
+          <li><a href="#" data-doc="installation.md">Installation</a></li>
+          <li><a href="#" data-doc="config.md">Configuration</a></li>
+          <li><a href="#" data-doc="usage.md">Usage</a></li>
+          <li><a href="#" data-doc="contributing.md">Contributing</a></li>
+          <li><a href="#" data-doc="license.md">License</a></li>
+        </ul>
+      </nav>
+      <main>
+        <zero-md src="docs/introduction.md"></zero-md>
+      </main>
+    </div>
+    <script>
+      document.querySelectorAll("nav a").forEach((link) => {
+        link.addEventListener("click", function (event) {
+          event.preventDefault();
+          const doc = this.getAttribute("data-doc");
+          document.querySelector("zero-md").src = `docs/${doc}`;
+        });
+      });
+    </script>
+  </body>
+</html>
