@@ -1,6 +1,3 @@
-# `contributing.md`
-
-```markdown
 # Contributing
 
 We welcome contributions! Here’s how you can help:
@@ -12,4 +9,3 @@ We welcome contributions! Here’s how you can help:
 5. **Create a Pull Request**
 
 Please ensure your code follows our coding standards and includes appropriate tests.
-```

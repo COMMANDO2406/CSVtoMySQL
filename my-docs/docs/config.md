@@ -1,8 +1,6 @@
 # Configuration
 
-## `config.py`
-
-Create a `config.py` file with the following content:
+Create/update the `config.py` file with the following content:
 
 ```python
 # config.py
