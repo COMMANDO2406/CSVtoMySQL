@@ -2,7 +2,7 @@
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/COMMANDO2406/CSVtoMySQL/test.yml?branch=main)](https://github.com/COMMANDO2406/CSVtoMySQL/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python Version](https://img.shields.io/badge/python-3.6%2B-blue.svg)](https://www.python.org/downloads/)
+[![Python Version](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
 
 CSV to MySQL is a simple Python utility that allows you to import data from a CSV file into a MySQL database. This tool checks if the specified database exists and creates it if it doesn't, then creates a table and imports the data from the CSV file.
 
