@@ -1,4 +1,10 @@
+import sys
+import os
 import mysql.connector
+
+# Ensure the config.py can be found
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from config import host, user, password
 
 def test_database_connection():
