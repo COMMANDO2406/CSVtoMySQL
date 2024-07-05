@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Docs</title>
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js"
+    ></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <nav>
+      <label for="doc-select">Select a document: </label>
+      <select id="doc-select">
+        <option value="introduction.md">Introduction</option>
+        <option value="installation.md">Installation</option>
+        <option value="usage.md">Usage</option>
+        <option value="config.md">Configuration</option>
+        <option value="contributing.md">Contributing</option>
+        <option value="license.md">License</option>
+      </select>
+    </nav>
+    <zero-md src="docs/introduction.md"></zero-md>
+    <script>
+      document
+        .getElementById("doc-select")
+        .addEventListener("change", function () {
+          const selectedDoc = this.value;
+          document.querySelector("zero-md").src = `docs/${selectedDoc}`;
+        });
+    </script>
+    <script src="index.js"></script>
+  </body>
+</html>
