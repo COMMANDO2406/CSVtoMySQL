@@ -31,3 +31,12 @@ Please ensure your code follows our coding standards and includes appropriate te
     main.csv
     README.md
 ```
+
+## Long To-Do's:
+
+Please contact the repository owner if you would like to contribute or check for any branches with similar names
+
+1. Data Validation
+2. API Integration
+3. Logging
+4. GUI setup
