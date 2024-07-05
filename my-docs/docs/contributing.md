@@ -9,3 +9,25 @@ We welcome contributions! Here’s how you can help:
 5. **Create a Pull Request**
 
 Please ensure your code follows our coding standards and includes appropriate tests.
+
+## Structure of this project
+
+```
+    my-docs/
+    ├── docs/
+    │ ├── introduction.md
+    │ ├── installation.md
+    │ ├── usage.md
+    │ ├── config.md
+    │ ├── contributing.md
+    │ └── license.md
+    ├── index.html
+    └── style.css
+    imgs/
+    └── code.png
+    config.py
+    csv_to_mysql.py
+    LICENSE
+    main.csv
+    README.md
+```
