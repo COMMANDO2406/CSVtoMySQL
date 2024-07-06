@@ -1,7 +1,6 @@
 import sys
 import os
 import mysql.connector
-import requests
 
 def test_mysql_connector_import():
     try:
