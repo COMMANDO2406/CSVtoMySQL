@@ -27,17 +27,9 @@
         </ul>
       </nav>
       <main>
-        <zero-md src="docs/introduction.md"></zero-md>
+        <zero-md src="my-docs/introduction.md"></zero-md>
       </main>
     </div>
-    <script>
-      document.querySelectorAll("nav a").forEach((link) => {
-        link.addEventListener("click", function (event) {
-          event.preventDefault();
-          const doc = this.getAttribute("data-doc");
-          document.querySelector("zero-md").src = `docs/${doc}`;
-        });
-      });
-    </script>
+    <script src="index.js"></script>
   </body>
 </html>
