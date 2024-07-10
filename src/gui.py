@@ -1,102 +1,122 @@
-import tkinter as tk
-from tkinter import messagebox
-from tkinter import filedialog
+import sys
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QFileDialog, QMessageBox, QVBoxLayout, QHBoxLayout
 import mysql.connector
 import csv
 from config import host, user, password
 
-def connect_to_database(database_name, table_name, header, csv_file):
-    try:
-        con = mysql.connector.connect(
-            host=host,
-            user=user,
-            password=password
-        )
+class CsvToMysqlApp(QWidget):
+    def __init__(self):
+        super().__init__()
 
-        cur = con.cursor()
+        self.initUI()
 
-        if con.is_connected():
-            print("Connected successfully")
-        else:
-            print("Not connected")
+    def initUI(self):
+        self.setWindowTitle('CSV to MySQL Importer')
 
-        # Check if the database exists and create it if it doesn't
-        cur.execute(f"SHOW DATABASES LIKE '{database_name}'")
-        result = cur.fetchone()
+        # Database Name
+        db_label = QLabel('Database Name:')
+        self.db_name = QLineEdit()
 
-        if not result:
-            cur.execute(f"CREATE DATABASE {database_name}")
-            print(f"Database '{database_name}' created successfully")
-        else:
-            print(f"Database '{database_name}' already exists")
+        # Table Name
+        table_label = QLabel('Table Name:')
+        self.table_name = QLineEdit()
 
-        # Connect to the newly created or existing database
-        con.database = database_name
+        # Column Names
+        columns_label = QLabel('Column Names (comma separated):')
+        self.columns = QLineEdit()
 
-        columns = [f"{col.strip()} varchar(255)" for col in header.split(",")]
-        
-        # this is a create query and it works by using the join funtion on the column names so that they are seperated by commas
-        # over here the query is required to be in uppercase as during testing the code would throw an error if it wasn't 
-        create_table_query = f"CREATE TABLE IF NOT EXISTS {table_name} ({', '.join(columns)})"
-        cur.execute(create_table_query)
+        # CSV File Path
+        csv_label = QLabel('CSV File Path:')
+        self.csv_path = QLineEdit()
+        browse_button = QPushButton('Browse')
+        browse_button.clicked.connect(self.browse_file)
 
-        with open(csv_file, "r") as file:
-            reader = csv.reader(file)
-            # this is the reader object from the csv module
-            next(reader)
+        # Import Button
+        import_button = QPushButton('Import')
+        import_button.clicked.connect(self.import_data)
 
-            for row in reader:
-                insert_query = f"INSERT INTO {table_name} ({', '.join(header.split(','))}) values ({', '.join(['%s'] * len(row))})"
-                # this is the query creation part of the code, it works by using a formated string to insert the variables
-                # the %s is used instead of a variable as it is required for mysql 
-                # and it dosent work if the variable is directly put into the formatted str.
-                values = tuple(row)
-                cur.execute(insert_query, values)
-                # the cur.execute function requires the query with the %s and a tuple contaning the varaibles in the above format
+        # Layout
+        layout = QVBoxLayout()
+        layout.addWidget(db_label)
+        layout.addWidget(self.db_name)
+        layout.addWidget(table_label)
+        layout.addWidget(self.table_name)
+        layout.addWidget(columns_label)
+        layout.addWidget(self.columns)
+        layout.addWidget(csv_label)
 
-        con.commit()
-        con.close()
-        messagebox.showinfo("Success", "Data imported successfully.")
-    except mysql.connector.Error as err:
-        messagebox.showerror("Error", f"Error: {err}")
+        csv_layout = QHBoxLayout()
+        csv_layout.addWidget(self.csv_path)
+        csv_layout.addWidget(browse_button)
+        layout.addLayout(csv_layout)
 
-def browse_file():
-    file_path = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")])
-    csv_path_entry.delete(0, tk.END)
-    csv_path_entry.insert(0, file_path)
+        layout.addWidget(import_button)
 
-app = tk.Tk()
-app.title("CSV to MySQL Importer")
+        self.setLayout(layout)
 
-tk.Label(app, text="Database Name:").grid(row=0, column=0, padx=10, pady=10)
-db_name_entry = tk.Entry(app)
-db_name_entry.grid(row=0, column=1, padx=10, pady=10)
+    def browse_file(self):
+        file_path, _ = QFileDialog.getOpenFileName(self, "Open CSV File", "", "CSV Files (*.csv)")
+        if file_path:
+            self.csv_path.setText(file_path)
 
-tk.Label(app, text="Table Name:").grid(row=1, column=0, padx=10, pady=10)
-table_name_entry = tk.Entry(app)
-table_name_entry.grid(row=1, column=1, padx=10, pady=10)
+    def import_data(self):
+        database_name = self.db_name.text()
+        table_name = self.table_name.text()
+        column_names = self.columns.text()
+        csv_file_path = self.csv_path.text()
 
-tk.Label(app, text="Column Names (comma separated):").grid(row=2, column=0, padx=10, pady=10)
-column_names_entry = tk.Entry(app)
-column_names_entry.grid(row=2, column=1, padx=10, pady=10)
+        if not database_name or not table_name or not column_names or not csv_file_path:
+            QMessageBox.warning(self, 'Error', 'All fields are required')
+            return
 
-tk.Label(app, text="CSV File Path:").grid(row=3, column=0, padx=10, pady=10)
-csv_path_entry = tk.Entry(app)
-csv_path_entry.grid(row=3, column=1, padx=10, pady=10)
-tk.Button(app, text="Browse", command=browse_file).grid(row=3, column=2, padx=10, pady=10)
+        try:
+            con = mysql.connector.connect(
+                host=host,
+                user=user,
+                password=password
+            )
 
-def on_import():
-    database_name = db_name_entry.get()
-    table_name = table_name_entry.get()
-    column_names = column_names_entry.get()
-    csv_file_path = csv_path_entry.get()
+            cur = con.cursor()
 
-    if not database_name or not table_name or not column_names or not csv_file_path:
-        messagebox.showerror("Error", "All fields are required")
-        return
+            if con.is_connected():
+                print("Connected successfully")
+            else:
+                print("Not connected")
 
-    connect_to_database(database_name, table_name, column_names, csv_file_path)
+            # Check if the database exists and create it if it doesn't
+            cur.execute(f"SHOW DATABASES LIKE '{database_name}'")
+            result = cur.fetchone()
 
-tk.Button(app, text="Import", command=on_import).grid(row=4, column=0, columnspan=3, padx=10, pady=10)
+            if not result:
+                cur.execute(f"CREATE DATABASE {database_name}")
+                print(f"Database '{database_name}' created successfully")
+            else:
+                print(f"Database '{database_name}' already exists")
 
-app.mainloop()
+            # Connect to the newly created or existing database
+            con.database = database_name
+
+            columns = [f"{col.strip()} varchar(255)" for col in column_names.split(",")]
+            create_table_query = f"CREATE TABLE IF NOT EXISTS {table_name} ({', '.join(columns)})"
+            cur.execute(create_table_query)
+
+            with open(csv_file_path, "r") as file:
+                reader = csv.reader(file)
+                next(reader)
+
+                for row in reader:
+                    insert_query = f"INSERT INTO {table_name} ({', '.join(column_names.split(','))}) values ({', '.join(['%s'] * len(row))})"
+                    values = tuple(row)
+                    cur.execute(insert_query, values)
+
+            con.commit()
+            con.close()
+            QMessageBox.information(self, 'Success', 'Data imported successfully.')
+        except mysql.connector.Error as err:
+            QMessageBox.critical(self, 'Error', f"Error: {err}")
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ex = CsvToMysqlApp()
+    ex.show()
+    sys.exit(app.exec_())
