@@ -98,6 +98,7 @@ class CsvToMysqlApp(QWidget):
 
             columns = [f"{col.strip()} varchar(255)" for col in column_names.split(",")]
             create_table_query = f"CREATE TABLE IF NOT EXISTS {table_name} ({', '.join(columns)})"
+            # print(f"Create Table Query: {create_table_query}")
             cur.execute(create_table_query)
 
             with open(csv_file_path, "r") as file:
@@ -107,12 +108,15 @@ class CsvToMysqlApp(QWidget):
                 for row in reader:
                     insert_query = f"INSERT INTO {table_name} ({', '.join(column_names.split(','))}) values ({', '.join(['%s'] * len(row))})"
                     values = tuple(row)
+                    # print(f"Insert Query: {insert_query}, Values: {values}")
                     cur.execute(insert_query, values)
 
             con.commit()
             con.close()
+            print("Data imported successfully.")
             QMessageBox.information(self, 'Success', 'Data imported successfully.')
         except mysql.connector.Error as err:
+            print(f"Error: {err}")
             QMessageBox.critical(self, 'Error', f"Error: {err}")
 
 if __name__ == '__main__':
