@@ -1,8 +1,18 @@
+import sys
+
+if len(sys.argv) != 5:
+    print("Usage: python csv_to_mysql.py <database_name> <table_name> <column_names> <csv_file>")
+    sys.exit(1)
+
+database_name = sys.argv[1]
+table_name = sys.argv[2]
+header = sys.argv[3].split(",")
+csv_file = sys.argv[4]
+
+
 import mysql.connector
 import csv
 from config import host,user,password
-
-database_name = input("Enter database name: ")
 
 con = mysql.connector.connect(
     host = host,
@@ -29,12 +39,6 @@ else:
 
 # Connect to the newly created or existing database
 con.database = database_name
-
-table_name = input("Enter table name: ")
-header = input("Enter column names (Seperated by commas): ").split(",") # this splits the columns entered based on commas
-
-csv_file = "main.csv"
-# this is the path to the CSV file that you would be importing your data from
 
 with open(csv_file, "r") as file:
     reader = csv.reader(file)

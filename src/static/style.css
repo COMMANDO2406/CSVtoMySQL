@@ -1,0 +1,126 @@
+/* General body styling */
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #f4f6f8;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #333;
+}
+
+/* Heading styling */
+h2 {
+  text-align: center;
+  font-size: 24px;
+  color: #007bff;
+  margin-bottom: 20px;
+  position: absolute;
+  top: 20px;
+  width: 100%;
+}
+
+/* Form container */
+form {
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+  box-sizing: border-box;
+}
+
+/* Flash message styling */
+.flash-message {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.flash-message.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.flash-message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Label styling */
+form label {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+  color: #555;
+}
+
+/* Input fields */
+form input[type="text"],
+form input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Focus state for inputs */
+form input[type="text"]:focus,
+form input[type="file"]:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Submit button styling */
+form button {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Button hover and active states */
+form button:hover {
+  background-color: #0056b3;
+}
+
+form button:active {
+  transform: scale(0.98);
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+  form {
+    padding: 20px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  form input[type="text"],
+  form input[type="file"],
+  form button {
+    font-size: 14px;
+  }
+}
