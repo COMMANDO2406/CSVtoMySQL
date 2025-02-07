@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CSV to MySQL</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <h2>Upload CSV and Import to MySQL</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %} {% for category, message in messages %}
+    <p
+      class="flash-message {% if category == 'success' %}success{% else %}error{% endif %}"
+    >
+      {{ message }}
+    </p>
+
+    {% endfor %} {% endif %} {% endwith %}
+
+    <form action="/" method="POST" enctype="multipart/form-data">
+      <label>Database Name:</label>
+      <input type="text" name="database" required /><br /><br />
+
+      <label>Table Name:</label>
+      <input type="text" name="table" required /><br /><br />
+
+      <label>Column Names (comma-separated):</label>
+      <input type="text" name="columns" required /><br /><br />
+
+      <label>Upload CSV:</label>
+      <input type="file" name="file" accept=".csv" required /><br /><br />
+
+      <button type="submit">Upload & Run</button>
+    </form>
+  </body>
+</html>
